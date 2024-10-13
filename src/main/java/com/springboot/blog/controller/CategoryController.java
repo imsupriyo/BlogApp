@@ -4,6 +4,7 @@ import com.springboot.blog.payload.CategoryDTO;
 import com.springboot.blog.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
         return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
@@ -33,12 +35,14 @@ public class CategoryController {
         return categoryService.findById(categoryId);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable("categoryId") long categoryId,
                                       @RequestBody CategoryDTO categoryDTO) {
         return ResponseEntity.ok(categoryService.updateById(categoryId, categoryDTO));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable("categoryId") long categoryId) {
         return ResponseEntity.ok(categoryService.deleteById(categoryId));

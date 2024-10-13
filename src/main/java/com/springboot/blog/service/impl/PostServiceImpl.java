@@ -106,6 +106,18 @@ public class PostServiceImpl implements PostService {
         return mapToDTO(updatedPost);
     }
 
+    @Override
+    public List<PostDto> getPostsByCategory(long categoryId) {
+        categoryRepository.findById(categoryId)
+                .orElseThrow(()->new ResourceNotFoundException("Category","id",categoryId));
+
+        List<Post> posts = postRepository.findPostByCategoryId(categoryId);
+
+        return posts.stream()
+                .map(post -> mapToDTO(post))
+                .collect(Collectors.toList());
+    }
+
     private PostDto mapToDTO(Post post) {
         PostDto postDto = modelMapper.map(post, PostDto.class);
 
