@@ -1,10 +1,13 @@
 package com.springboot.blog.payload;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
+@Schema(description = "PostResponse model information")
 
 @Data
 @AllArgsConstructor
