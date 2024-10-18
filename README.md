@@ -13,3 +13,8 @@ role based resource access control.
 
 # Documentation:
  Well documented using Spring OpenAPI documentation (Swagger).
+![](images/comment_post_resource.png)
+![](images/category_authentication_resource.png)
+
+#### Schemas:
+ ![](images/schemas.png)
