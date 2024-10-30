@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 
 @Component
@@ -34,16 +33,17 @@ public class JWTTokenProvider {
                 .expiration(expiryDate)
                 .signWith(key())
                 .compact();
+
         return token;
     }
 
-    public Key key() {
+    public SecretKey key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
     public String getUsername(String token) {
         return Jwts.parser()
-                .verifyWith((SecretKey) key())
+                .verifyWith(key())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
@@ -53,9 +53,10 @@ public class JWTTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
-                    .verifyWith((SecretKey) key())
+                    .verifyWith(key())
                     .build()
                     .parse(token);
+
             return true;
         } catch (MalformedJwtException malformedJwtException) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Invalid JWT token");
