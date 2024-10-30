@@ -3,12 +3,18 @@ package com.springboot.blog.payload;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Schema(description = "PostDTO model information")
 @Data
+@NoArgsConstructor // JUnit unable to instantiate class without it
+@AllArgsConstructor
+@Builder
 public class PostDto {
     private long id;
 
